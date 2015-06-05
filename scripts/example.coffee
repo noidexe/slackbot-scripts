@@ -23,17 +23,17 @@ module.exports = (robot) ->
   # robot.hear /I like pie/i, (res) ->
   #   res.emote "makes a freshly baked pie"
   #
-  # lulz = ['lol', 'rofl', 'lmao']
+   lulz = ['lol', 'rofl', 'lmao']
   #
-  # robot.respond /lulz/i, (res) ->
-  #   res.send res.random lulz
+   robot.respond /lulz/i, (res) ->
+     res.send res.random lulz
   #
   # robot.topic (res) ->
   #   res.send "#{res.message.text}? That's a Paddlin'"
   #
   #
-  # enterReplies = ['Hi', 'Target Acquired', 'Firing', 'Hello friend.', 'Gotcha', 'I see you']
-  # leaveReplies = ['Are you still there?', 'Target lost', 'Searching']
+  enterReplies = ['Hi', 'Target Acquired', 'Firing', 'Hello friend.', 'Gotcha', 'I see you']
+  leaveReplies = ['Are you still there?', 'Target lost', 'Searching']
   #
   # robot.enter (res) ->
   #   res.send res.random enterReplies
@@ -55,24 +55,24 @@ module.exports = (robot) ->
   #
   # annoyIntervalId = null
   #
-  # robot.respond /annoy me/, (res) ->
-  #   if annoyIntervalId
-  #     res.send "AAAAAAAAAAAEEEEEEEEEEEEEEEEEEEEEEEEIIIIIIIIHHHHHHHHHH"
-  #     return
-  #
-  #   res.send "Hey, want to hear the most annoying sound in the world?"
-  #   annoyIntervalId = setInterval () ->
-  #     res.send "AAAAAAAAAAAEEEEEEEEEEEEEEEEEEEEEEEEIIIIIIIIHHHHHHHHHH"
-  #   , 1000
-  #
-  # robot.respond /unannoy me/, (res) ->
-  #   if annoyIntervalId
-  #     res.send "GUYS, GUYS, GUYS!"
-  #     clearInterval(annoyIntervalId)
-  #     annoyIntervalId = null
-  #   else
-  #     res.send "Not annoying you right now, am I?"
-  #
+   robot.respond /annoy me/, (res) ->
+     if annoyIntervalId
+       res.send "AAAAAAAAAAAEEEEEEEEEEEEEEEEEEEEEEEEIIIIIIIIHHHHHHHHHH"
+       return
+  
+     res.send "Hey, want to hear the most annoying sound in the world?"
+     annoyIntervalId = setInterval () ->
+       res.send "AAAAAAAAAAAEEEEEEEEEEEEEEEEEEEEEEEEIIIIIIIIHHHHHHHHHH"
+     , 1000
+  
+   robot.respond /unannoy me/, (res) ->
+     if annoyIntervalId
+       res.send "GUYS, GUYS, GUYS!"
+       clearInterval(annoyIntervalId)
+       annoyIntervalId = null
+     else
+       res.send "Not annoying you right now, am I?"
+  
   #
   # robot.router.post '/hubot/chatsecrets/:room', (req, res) ->
   #   room   = req.params.room
@@ -83,12 +83,12 @@ module.exports = (robot) ->
   #
   #   res.send 'OK'
   #
-  # robot.error (err, res) ->
-  #   robot.logger.error "DOES NOT COMPUTE"
-  #
-  #   if res?
-  #     res.reply "DOES NOT COMPUTE"
-  #
+   robot.error (err, res) ->
+     robot.logger.error "DOES NOT COMPUTE"
+  
+     if res?
+       res.reply "DOES NOT COMPUTE"
+  
   # robot.respond /have a soda/i, (res) ->
   #   # Get number of sodas had (coerced to a number).
   #   sodasHad = robot.brain.get('totalSodas') * 1 or 0
