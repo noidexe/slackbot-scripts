@@ -10,6 +10,6 @@
 
 module.exports = (robot) ->
 
-  lulz = ['lol', 'rofl', 'lmao']
-  robot.respond /lulz/i, (res) ->
-    res.send res.random lulz
+  denada = ['De nada', 'No hay porque', 'No hay de queso nomas de papa', 'Gracias hacen los monos']
+  robot.hear /gracias/i, (res) ->
+    res.send res.random denada
