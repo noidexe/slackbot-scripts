@@ -56,9 +56,9 @@ module.exports = function (robot) {
     {
       res.send('Status:' + active);
     }
-    else
+    /*else
     {
       res.send(res.random(unknown));
-    }
+    }*/
 	});
 };
