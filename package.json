@@ -18,7 +18,11 @@
     "hubot-redis-brain": "0.0.2",
     "hubot-scripts": "^2.5.16",
     "hubot": "^2.12.0",
-    "hubot-slack": "^3.3.0"
+    "hubot-slack": "^3.3.0",
+    "hubot-auth": "*",
+    "hubot-qr": "*",
+    "hubot-calculator": ">= 0.4.0",
+    "mitsuku-api": ">= 0.0.1"
   },
   "engines": {
     "node": "0.10.x"

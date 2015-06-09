@@ -1,6 +1,7 @@
 // Description: 
 //   TrollBot
-// 
+//
+var mit = require('mitsuku-api')(); 
 
 module.exports = function (robot) {
 	var active = true;
@@ -56,9 +57,20 @@ module.exports = function (robot) {
     {
       res.send('Status:' + active);
     }
-    /*else
+    res.finish();
+	});
+  robot.respond(/.*/,function (res)
+  {
+    /*
+    var r = /(?:#{robot.alias}|#{robot.name}) (.*)/i;
+    var matches = res.message.text.match(r);
+    if (matches != null && matches.length > 1)
     {
       res.send(res.random(unknown));
-    }*/
-	});
+    }
+    */
+    mit.send(res.message.text).then(function(response) {
+      res.send(response);
+    });
+  });
 };
