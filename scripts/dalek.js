@@ -59,7 +59,7 @@ module.exports = function (robot) {
 	});
   robot.catchAll(function (res)
   {
-    var r = new RegExp("(?:#{robot.alias}|#{robot.name}) (.*)", "i");
+    var r = /(?:#{robot.alias}|#{robot.name}) (.*)/i;
     var matches = res.message.text.match(r);
     if (matches != null && matches.length > 1)
     {
