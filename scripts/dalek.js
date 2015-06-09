@@ -76,18 +76,12 @@ module.exports = function (robot) {
       }
       res.finish();
     }
-	});
-  robot.respond(/.*/,function (res)
-  {
+    else
+    {      
       if (!useMitsuku)
       {
-        var r = /(?:#{robot.alias}|#{robot.name}) (.*)/i;
-        var matches = res.message.text.match(r);
-        if (matches != null && matches.length > 1)
-        {
-          res.send(res.random(unknown));
-          res.finish();
-        }
+        res.send(res.random(unknown));
+        res.finish();
       }
       else
       {
@@ -96,5 +90,6 @@ module.exports = function (robot) {
           res.finish();
         });
       }
-  });
+    }
+	});
 };
