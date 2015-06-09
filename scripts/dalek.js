@@ -67,12 +67,18 @@ module.exports = function (robot) {
       if (res.message.text.match(/mitsuku (on)/i).length>1)
       {
         useMitsuku = true;
-        res.send("Mitsuku activada");
       }
       else 
       {
         useMitsuku = false;
+      }
+      if (!useMitsuku)
+      {
         res.send("Mitsuku desactivada");
+      }
+      else
+      {
+        res.send("Mitsuku activada");
       }
       res.finish();
     }
