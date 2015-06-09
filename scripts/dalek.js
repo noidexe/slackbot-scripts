@@ -56,9 +56,14 @@ module.exports = function (robot) {
     {
       res.send('Status:' + active);
     }
-    /*else
+	});
+  robot.catchAll(function (res)
+  {
+    var r = new RegExp("^(?:#{robot.alias}|#{robot.name}) (.*)", "i"(;
+    var matches = res.message.text.match(r);
+    if (matches != null && matches.length > 1)
     {
       res.send(res.random(unknown));
-    }*/
-	});
+    }
+  });
 };
