@@ -1,12 +1,14 @@
 // Description: 
 //   TrollBot
 //
-var mit = require('mitsuku-api')(); 
+
 
 module.exports = function (robot) {
 	var active = true;
   var inactiveTime = 30; //Tiempo en minutos
   var inactiveTimer =null;
+  var mit = require('mitsuku-api')(); 
+  var useMitsuku = false;
   var unknown = ['Eh?','Que?', 'Mmm...', 'BEEP BEEP', 'What?', 'Que decis?', 'Que queres?', 'Que decias?', 'Lo que?','I DON SPIK INGLISH'];
 	robot.hear(/gracias/i, function(res)
 	{
@@ -42,6 +44,7 @@ module.exports = function (robot) {
         clearTimeout(inactiveTimer);
         inactiveTimer = null;
       }
+      res.finish();
     }
     else if (command.toLowerCase()=="deactivate")
     {
@@ -52,25 +55,46 @@ module.exports = function (robot) {
         active = true;
 				res.reply("BEEP BEEP. I'M BACK BABY");
 			}, inactiveTime * 60 * 1000);
+      res.finish();
     }
     else if (command.toLowerCase()=="status")
     {
       res.send('Status:' + active);
+      res.finish();
     }
-    res.finish();
+    else if (comand.toLowerCase()=='mitsuku')
+    {
+      if (res.message.text.match(/mitsuku (on)/i).length>1)
+      {
+        useMitsuku = true;
+        res.send("Mitsuku activada");
+      }
+      else 
+      {
+        useMitsuku = false;
+        res.send("Mitsuku desactivada");
+      }
+      res.finish();
+    }
 	});
   robot.respond(/.*/,function (res)
   {
-    /*
-    var r = /(?:#{robot.alias}|#{robot.name}) (.*)/i;
-    var matches = res.message.text.match(r);
-    if (matches != null && matches.length > 1)
-    {
-      res.send(res.random(unknown));
-    }
-    */
-    mit.send(res.message.text).then(function(response) {
-      res.send(response);
-    });
+      if (!useMitsuku)
+      {
+        var r = /(?:#{robot.alias}|#{robot.name}) (.*)/i;
+        var matches = res.message.text.match(r);
+        if (matches != null && matches.length > 1)
+        {
+          res.send(res.random(unknown));
+          res.finish();
+        }
+      }
+      else
+      {
+        mit.send(res.message.text).then(function(response) {
+          res.send(response);
+          res.finish();
+        });
+      }
   });
 };
