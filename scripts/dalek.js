@@ -48,13 +48,30 @@ module.exports = function (robot) {
     }
     else if (command.toLowerCase()=="deactivate")
     {
+      var timeSet = /deactivate ([0-9]+|forever)/i;
+      var time = inactiveTime;
+      var timeMatch = command.message.text.match(timeSet);
+      if (timeMatch && timeMatch.length>1)
+      {
+          if (timeMatch[1].toLowerCase()=='forever')
+          {
+            time=0;
+          }
+          else
+          {
+            time = parseInt(timeMatch[1]);
+          }
+      }
       active = false;
       res.send("SHUTTING DOWN. Hasta la vista Baby");
-      inactiveTimer = setTimeout(function() 
+      if (time>0)
       {
-        active = true;
-				res.reply("BEEP BEEP. I'M BACK BABY");
-			}, inactiveTime * 60 * 1000);
+        inactiveTimer = setTimeout(function() 
+        {
+          active = true;
+          res.reply("BEEP BEEP. I'M BACK BABY");
+        }, time * 60 * 1000);
+      }
       res.finish();
     }
     else if (command.toLowerCase()=="status")
