@@ -4,7 +4,7 @@
 
 
 module.exports = function (robot) {
-	var active = false;
+	var active = true;
   var inactiveTime = 30; //Tiempo en minutos
   var inactiveTimer =null;
   var mit = require('mitsuku-api')(); 
@@ -18,13 +18,31 @@ module.exports = function (robot) {
         res.send(res.random(denada));
       }
 	});
-  robot.hear(/soy (nuevo)/i, function (res)
+  
+  /*robot.hear(/xD/, function(res)
 	{
-		var name = res.match[1];
-		res.send("Hola #{name}! Te recomiendo que leas este post para saber de donde obtener recursos: http://foro.adva.vg/t/post-introductorio-para-el-desarrollo-de-videojuegos/125");
+    if (active)
+    {
+      res.send(":stuck_out_tongue_closed_eyes:");
+    }
+	});*/
+	
+  robot.hear(/joined #general/, function (msg)
+  {
+    msg.send("Bienvenido "+msg.message.user.name+"!");
+  });
+
+	robot.hear(/soy (nuevo)/i, function (msg)
+	{
+		var name = msg.message.user.name;
+		msg.send("Hola @"+name+"! Te recomiendo que leas este post para saber de donde obtener recursos: http://foro.adva.vg/t/post-introductorio-para-el-desarrollo-de-videojuegos/125");
 	});
-	robot.respond(/activate/i, function(res)
+	
+	robot.respond(/(.*)/i, function(res)
 	{
+		var command = res.match[1];
+    if (command.toLowerCase()=="activate")
+    {
       active = true;
       res.send('POWERING UP. BEEP BEEP BIP BEEP');
       if (inactiveTimer)
@@ -33,13 +51,15 @@ module.exports = function (robot) {
         inactiveTimer = null;
       }
       res.finish();
-  });
-	robot.respond(/deactivate[ ]([0-9]*|forever)/i, function (res)
-  {
+    }
+    else if (command.toLowerCase()=="deactivate")
+    {
+      var timeSet = /deactivate ([0-9]+|forever)/i;
       var time = inactiveTime;
-      if (res.match && res.match.length>1)
+      var timeMatch = res.message.text.match(timeSet);
+      if (timeMatch && timeMatch.length>1)
       {
-          if (res.match[1].toLowerCase()=='forever')
+          if (timeMatch[1].toLowerCase()=='forever')
           {
             time=0;
           }
@@ -52,8 +72,6 @@ module.exports = function (robot) {
       res.send("SHUTTING DOWN. Hasta la vista Baby");
       if (time>0)
       {
-        if(inactiveTimer)
-          clearTimeout(inactiveTimer);
         inactiveTimer = setTimeout(function() 
         {
           active = true;
@@ -61,17 +79,46 @@ module.exports = function (robot) {
         }, time * 60 * 1000);
       }
       res.finish();
-  });
-	robot.respond(/status/i, function(res)
-  {
+    }
+    else if (command.toLowerCase()=="status")
+    {
       res.send('Status:' + active);
       res.finish();
-  });
-	robot.respond(/mitsuku (.*)/i, function(res)
-  {
-        mit.send(res.match[1]).then(function(response) {
+    }
+    else if (comand.toLowerCase()=='mitsuku')
+    {
+      if (res.message.text.match(/mitsuku (on)/i).length>1)
+      {
+        useMitsuku = true;
+      }
+      else 
+      {
+        useMitsuku = false;
+      }
+      if (!useMitsuku)
+      {
+        res.send("Mitsuku desactivada");
+      }
+      else
+      {
+        res.send("Mitsuku activada");
+      }
+      res.finish();
+    }
+    else
+    {      
+      if (!useMitsuku)
+      {
+        res.send(res.random(unknown));
+        res.finish();
+      }
+      else
+      {
+        mit.send(res.message.text).then(function(response) {
           res.send(response);
           res.finish();
         });
-  });
+      }
+    }
+	});
 };
