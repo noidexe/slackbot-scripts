@@ -18,17 +18,7 @@ module.exports = function (robot) {
         res.send(res.random(denada));
       }
 	});
-  
-	/* Deactivated for the good by Kinerius.
-  robot.hear(/xD/, function(res)
-	{
-    if (active)
-    {
-      res.send(":stuck_out_tongue_closed_eyes:");
-    }
-	});*/
-	
-	robot.hear(/soy (nuevo)/i, function (res)
+  robot.hear(/soy (nuevo)/i, function (res)
 	{
 		var name = res.match[1];
 		res.send("Hola #{name}! Te recomiendo que leas este post para saber de donde obtener recursos: http://foro.adva.vg/t/post-introductorio-para-el-desarrollo-de-videojuegos/125");
@@ -44,7 +34,7 @@ module.exports = function (robot) {
       }
       res.finish();
   });
-	robot.respond(/deactivate[ ]([0-9]*|forever)/i, function(res)
+	robot.respond(/deactivate[ ]([0-9]*|forever)/i, function (res)
   {
       var time = inactiveTime;
       if (res.match && res.match.length>1)
