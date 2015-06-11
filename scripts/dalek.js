@@ -23,7 +23,6 @@ module.exports = function (robot) {
 		var name = res.match[1];
 		res.send("Hola #{name}! Te recomiendo que leas este post para saber de donde obtener recursos: http://foro.adva.vg/t/post-introductorio-para-el-desarrollo-de-videojuegos/125");
 	});
-}
 	robot.respond(/activate/i, function(res)
 	{
       active = true;
