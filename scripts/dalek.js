@@ -18,13 +18,15 @@ module.exports = function (robot) {
         res.send(res.random(denada));
       }
 	});
-	robot.hear(/xD/, function(res)
+  
+	/* Deactivated for the good by Kinerius.
+  robot.hear(/xD/, function(res)
 	{
     if (active)
     {
       res.send(":stuck_out_tongue_closed_eyes:");
     }
-	});
+	});*/
 	
 	robot.hear(/soy (nuevo)/i, function (res)
 	{
