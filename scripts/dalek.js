@@ -23,9 +23,9 @@ module.exports = function (robot) {
 		var name = res.match[1];
 		res.send("Hola #{name}! Te recomiendo que leas este post para saber de donde obtener recursos: http://foro.adva.vg/t/post-introductorio-para-el-desarrollo-de-videojuegos/125");
 	});
-  /*
+}
 	robot.respond(/activate/i, function(res)
-  {
+	{
       active = true;
       res.send('POWERING UP. BEEP BEEP BIP BEEP');
       if (inactiveTimer)
@@ -74,47 +74,5 @@ module.exports = function (robot) {
           res.send(response);
           res.finish();
         });
-  });*/
-		var command = res.match[1];
-    if (command.toLowerCase()=="activate")
-    {
-    }
-    else if (command.toLowerCase()=="deactivate")
-    {
-    }
-    else if (command.toLowerCase()=="status")
-    {
-    }
-    else if (comand.toLowerCase()=='mitsuku')
-    {
-      if (res.message.text.match(/mitsuku (on)/i).length>1)
-      {
-        useMitsuku = true;
-      }
-      else 
-      {
-        useMitsuku = false;
-      }
-      if (!useMitsuku)
-      {
-        res.send("Mitsuku desactivada");
-      }
-      else
-      {
-        res.send("Mitsuku activada");
-      }
-      res.finish();
-    }
-    else
-    {      
-      if (!useMitsuku)
-      {
-        res.send(res.random(unknown));
-        res.finish();
-      }
-      else
-      {
-      }
-    }
-	});
+  });
 };
