@@ -4,7 +4,7 @@
 
 
 module.exports = function (robot) {
-	var active = true;
+	var active = false;
   var inactiveTime = 30; //Tiempo en minutos
   var inactiveTimer =null;
   var mit = require('mitsuku-api')(); 
@@ -23,6 +23,7 @@ module.exports = function (robot) {
 		var name = res.match[1];
 		res.send("Hola #{name}! Te recomiendo que leas este post para saber de donde obtener recursos: http://foro.adva.vg/t/post-introductorio-para-el-desarrollo-de-videojuegos/125");
 	});
+  /*
 	robot.respond(/activate/i, function(res)
   {
       active = true;
@@ -73,7 +74,7 @@ module.exports = function (robot) {
           res.send(response);
           res.finish();
         });
-  });
+  });*/
 		var command = res.match[1];
     if (command.toLowerCase()=="activate")
     {
