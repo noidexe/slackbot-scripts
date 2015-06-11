@@ -33,12 +33,8 @@ module.exports = function (robot) {
 		var name = res.match[1];
 		res.send("Hola #{name}! Te recomiendo que leas este post para saber de donde obtener recursos: http://foro.adva.vg/t/post-introductorio-para-el-desarrollo-de-videojuegos/125");
 	});
-	
-	robot.respond(/(.*)/i, function(res)
-	{
-		var command = res.match[1];
-    if (command.toLowerCase()=="activate")
-    {
+	robot.respond(/activate/i, function(res)
+  {
       active = true;
       res.send('POWERING UP. BEEP BEEP BIP BEEP');
       if (inactiveTimer)
@@ -47,15 +43,13 @@ module.exports = function (robot) {
         inactiveTimer = null;
       }
       res.finish();
-    }
-    else if (command.toLowerCase()=="deactivate")
-    {
-      var timeSet = /deactivate ([0-9]+|forever)/i;
+  });
+	robot.respond(/deactivate[ ]([0-9]*|forever)/i, function(res)
+  {
       var time = inactiveTime;
-      var timeMatch = res.message.text.match(timeSet);
-      if (timeMatch && timeMatch.length>1)
+      if (res.match && res.match.length>1)
       {
-          if (timeMatch[1].toLowerCase()=='forever')
+          if (res.match[1].toLowerCase()=='forever')
           {
             time=0;
           }
@@ -68,6 +62,8 @@ module.exports = function (robot) {
       res.send("SHUTTING DOWN. Hasta la vista Baby");
       if (time>0)
       {
+        if(inactiveTimer)
+          clearTimeout(inactiveTimer);
         inactiveTimer = setTimeout(function() 
         {
           active = true;
@@ -75,11 +71,28 @@ module.exports = function (robot) {
         }, time * 60 * 1000);
       }
       res.finish();
+  });
+	robot.respond(/status/i, function(res)
+  {
+      res.send('Status:' + active);
+      res.finish();
+  });
+	robot.respond(/mitsuku (.*)/i, function(res)
+  {
+        mit.send(res.match[1]).then(function(response) {
+          res.send(response);
+          res.finish();
+        });
+  });
+		var command = res.match[1];
+    if (command.toLowerCase()=="activate")
+    {
+    }
+    else if (command.toLowerCase()=="deactivate")
+    {
     }
     else if (command.toLowerCase()=="status")
     {
-      res.send('Status:' + active);
-      res.finish();
     }
     else if (comand.toLowerCase()=='mitsuku')
     {
@@ -110,10 +123,6 @@ module.exports = function (robot) {
       }
       else
       {
-        mit.send(res.message.text).then(function(response) {
-          res.send(response);
-          res.finish();
-        });
       }
     }
 	});
