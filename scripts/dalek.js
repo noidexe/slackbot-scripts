@@ -50,7 +50,7 @@ module.exports = function (robot) {
     {
       var timeSet = /deactivate ([0-9]+|forever)/i;
       var time = inactiveTime;
-      var timeMatch = command.message.text.match(timeSet);
+      var timeMatch = res.message.text.match(timeSet);
       if (timeMatch && timeMatch.length>1)
       {
           if (timeMatch[1].toLowerCase()=='forever')
