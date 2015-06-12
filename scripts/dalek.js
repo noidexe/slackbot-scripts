@@ -4,7 +4,7 @@
 
 
 module.exports = function (robot) {
-	var active = false;
+	var active = true;
   var inactiveTime = 30; //Tiempo en minutos
   var inactiveTimer =null;
   var mit = require('mitsuku-api')(); 
@@ -18,56 +18,20 @@ module.exports = function (robot) {
         res.send(res.random(denada));
       }
 	});
-  robot.hear(/soy (nuevo)/i, function (res)
+	
+  robot.hear(/joined #general/, function (msg)
+  {
+    msg.send("Bienvenido "+msg.message.user.name+"!");
+    msg.finish();
+  });
+
+	robot.hear(/soy (nuevo)/i, function (msg)
 	{
-		var name = res.match[1];
-		res.send("Hola #{name}! Te recomiendo que leas este post para saber de donde obtener recursos: http://foro.adva.vg/t/post-introductorio-para-el-desarrollo-de-videojuegos/125");
+		var name = msg.message.user.name;
+		msg.send("Hola @"+name+"! Te recomiendo que leas este post para saber de donde obtener recursos: http://foro.adva.vg/t/post-introductorio-para-el-desarrollo-de-videojuegos/125");
+    msg.finish();
 	});
-	robot.respond(/activate/i, function(res)
-	{
-      active = true;
-      res.send('POWERING UP. BEEP BEEP BIP BEEP');
-      if (inactiveTimer)
-      {
-        clearTimeout(inactiveTimer);
-        inactiveTimer = null;
-      }
-      res.finish();
-  });
-	robot.respond(/deactivate[ ]([0-9]*|forever)/i, function (res)
-  {
-      var time = inactiveTime;
-      if (res.match && res.match.length>1)
-      {
-          if (res.match[1].toLowerCase()=='forever')
-          {
-            time=0;
-          }
-          else
-          {
-            time = parseInt(timeMatch[1]);
-          }
-      }
-      active = false;
-      res.send("SHUTTING DOWN. Hasta la vista Baby");
-      if (time>0)
-      {
-        if(inactiveTimer)
-          clearTimeout(inactiveTimer);
-        inactiveTimer = setTimeout(function() 
-        {
-          active = true;
-          res.reply("BEEP BEEP. I'M BACK BABY");
-        }, time * 60 * 1000);
-      }
-      res.finish();
-  });
-	robot.respond(/status/i, function(res)
-  {
-      res.send('Status:' + active);
-      res.finish();
-  });
-	robot.respond(/mitsuku (.*)/i, function(res)
+	robot.respond(/(.*)/i, function(res)
   {
         mit.send(res.match[1]).then(function(response) {
           res.send(response);

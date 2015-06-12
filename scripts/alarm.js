@@ -35,5 +35,6 @@ module.exports = function (robot) {
 				res.reply('Agendaste "' + evento + '". Ya es la hora.');
 			}, tiempo);
 		}
+    res.finish();
 	});
 };
