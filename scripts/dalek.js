@@ -31,7 +31,7 @@ module.exports = function (robot) {
 		msg.send("Hola @"+name+"! Te recomiendo que leas este post para saber de donde obtener recursos: http://foro.adva.vg/t/post-introductorio-para-el-desarrollo-de-videojuegos/125");
     msg.finish();
 	});
-	robot.respond(/mitsuku (.*)/i, function(res)
+	robot.respond(/(.*)/i, function(res)
   {
         mit.send(res.match[1]).then(function(response) {
           res.send(response);
